@@ -5,57 +5,65 @@ using namespace std;
 struct Node
 {
     int data;
-    Node *next;
+    Node* next;
 };
 
-void insertAtFirst(Node **head, int data)
+
+void insertAtFirst(Node** head, int data)
 {
-    Node *newNode = new Node();
+    Node* newNode = new Node();
 
     newNode->data = data;
     newNode->next = *head;
     *head = newNode;
 }
 
-void insertAfterNode(Node *prevNode, int data)
+void insertAfterNode(Node* prevNode, int data)
 {
     if (prevNode == NULL)
     {
-        cout << "The given node is required, cannot be null " << endl;
+        cout << "The given node is required, it can not be null" << endl;
         return;
     }
+    
 
-    Node *newNode = new Node();
+    Node* newNode = new Node();
 
     newNode->data = data;
     newNode->next = prevNode->next;
-    prevNode->next = newNode; 
+    prevNode->next = newNode;
 }
 
-void insertAtEnd(Node **head, int data)
+void insertAtEnd(Node** head, int data)
 {
-    Node *newNode = new Node();
+    Node* newNode = new Node();
+
     newNode->data = data;
     newNode->next = NULL;
 
-    // if the list is empty, the new node becomes the first node
+    // if list is empty, this newNode becomes the first node
     if (*head == NULL)
     {
         *head = newNode;
         return;
     }
-
+    
     Node *last = *head;
     while (last->next != NULL)
     {
         last = last->next;
     }
     last->next = newNode;
-    
 }
 
 void displayLinkedList(Node *node)
 {
+    if (node == NULL)
+    {
+        cout << "The list is empty" << endl;
+        return;
+    }
+    
     while(node != NULL)
     {
         cout << node->data;
@@ -66,7 +74,7 @@ void displayLinkedList(Node *node)
     cout << "-->null" << endl;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     Node *head = NULL;
     insertAtFirst(&head, 10);
