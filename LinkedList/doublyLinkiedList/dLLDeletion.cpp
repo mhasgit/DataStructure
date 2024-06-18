@@ -19,7 +19,7 @@ void insertFront(Node **head, int data)
 
     if (*head != NULL)
     {
-        (*head)->prev = *head;
+        (*head)->prev = newNode;
     }
 
     *head = newNode;
@@ -70,30 +70,63 @@ Node *deleteLast(Node *head)
     return head;
 }
 
-Node* deleteAfterSpecificNode(Node* head, int data)
+Node* deleteNodeWithValue(Node** head, int valueToDelete)
 {
     if (head == NULL)
     {
         cout << "List is empty";
         return NULL;
     }
-    
 
+    Node* tempNode = *head, *prevNode = NULL;
+
+    while (tempNode != NULL && tempNode->data != valueToDelete)
+    {
+        tempNode = tempNode->next;
+    }
+    
+    if (tempNode == NULL)
+    {
+        cout << "Value not found in the list" << endl;
+        return *head;
+    }
+    
+    if (tempNode == *head)
+    {
+        *head = tempNode->next;
+        if (*head != NULL)
+        {
+            (*head)->prev = NULL;
+        }
+    }
+    else
+    {
+        if (tempNode->next != NULL)
+        {
+            tempNode->next->prev = tempNode->prev;
+        }
+        tempNode->prev->next = tempNode->next;
+    }
+
+    delete(tempNode);
+    return *head;
 }
 
-void displayList(Node *node)
-{
-    struct Node *last;
-
-    while (node != NULL)
-    {
-        cout << node->data << "<==>";
-        last = node;
+void displayList(Node *node) {
+    if (node == NULL) {
+        cout << "List is empty" << endl;
+        return;
+    }
+    
+    while (node != NULL) {
+        cout << node->data;
+        if (node->next != NULL)
+            cout << "<==>";
         node = node->next;
     }
-    if (node == NULL)
-        cout << "NULL";
+    cout << "-->NULL" << endl;
 }
+
 
 int main(int argc, char const *argv[])
 {
@@ -104,6 +137,7 @@ int main(int argc, char const *argv[])
     insertFront(&head, 30);
     insertFront(&head, 40);
     displayList(head);
-
+    head = deleteNodeWithValue(&head, 30);
+    displayList(head);
     return 0;
 }

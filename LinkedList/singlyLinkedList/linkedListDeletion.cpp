@@ -49,11 +49,9 @@ Node* deleteLast(Node* head)
         }
         delete(secondLast->next);
         secondLast->next = NULL;
-        return head;
-    
-    
-       
+        return head;  
 }
+
 
 void displayLinkedList(Node* node)
 {
